@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fruit-sf
+  namespace: name2
+  labels:
+    app: fruit-api
+spec:
+  selector:
+    app: fruit-sf
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8090
+      targetPort: 8090
+      protocol: TCP

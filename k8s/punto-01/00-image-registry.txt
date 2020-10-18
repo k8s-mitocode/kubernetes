@@ -1,0 +1,30 @@
+docker run -d --name mysql-database -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=database mysql
+
+docker inspect mysql-database
+
+docker build -f Dockerfile -t java-fruit-api .
+
+docker run -d --name java-fruit-api -e DATABASE_HOST=172.17.0.2 -e DATABASE_PORT=3306 -e DATABASE_NAME=database -e DATABASE_USERNAME=root -e DATABASE_PASSWORD=password -p 8090:8090 java-fruit-api
+
+
+ curl --location --request GET 'http://localhost:8090'
+ curl --location --request GET 'http://localhost:8090/list'
+
+ curl --location --request POST 'http://localhost:8090/create?name=apple'
+ curl --location --request POST 'http://localhost:8090/create?name=apricot'
+ curl --location --request POST 'http://localhost:8090/create?name=blackberry'
+ curl --location --request POST 'http://localhost:8090/create?name=blackcurrant'
+ curl --location --request POST 'http://localhost:8090/create?name=blueberry'
+ curl --location --request POST 'http://localhost:8090/create?name=Orange'
+ curl --location --request POST 'http://localhost:8090/create?name=Pear'
+ curl --location --request POST 'http://localhost:8090/create?name=Strawberry'
+ curl --location --request POST 'http://localhost:8090/create?name=Pomegranate'
+ curl --location --request POST 'http://localhost:8090/create?name=Mandarin'
+ curl --location --request POST 'http://localhost:8090/create?name=Pineapple'
+ curl --location --request POST 'http://localhost:8090/create?name=Grapefruit'
+
+
+ docker images
+ docker tag 0f0a812986bc k8smitocode1/java-fruit-api
+
+ docker push k8smitocode1/java-fruit-api

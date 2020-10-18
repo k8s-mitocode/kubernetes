@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-sf
+  namespace: name2
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql-sf
+  serviceName: mysql-sf
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mysql-sf
+    spec:
+      terminationGracePeriodSeconds: 10      
+      containers:
+        - name: mysql
+          image: mysql
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-cm
+                  key: MYSQL_DATABASE
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: http
+          volumeMounts:
+            - name: mysql-pvc-f-storage
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-pvc-f-storage
+      spec:
+        resources:
+          requests:
+            storage: 1Gi
+        accessModes:
+          - ReadWriteOnce

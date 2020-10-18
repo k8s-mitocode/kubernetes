@@ -1,0 +1,9 @@
+ gcloud auth login
+
+ gcloud projects list
+
+ gcloud config set project PROJECT_ID
+ 
+ gcloud config set compute/zone us-central1-c
+
+ gcloud container clusters create k8scode

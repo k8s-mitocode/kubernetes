@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: fruit-cm
+  namespace: name1
+  labels:
+    app: fruit-api
+data:
+  DATABASE_HOST: mysql
+  DATABASE_PORT: "3306"
+  DATABASE_NAME: db_fruit
+  DATABASE_USERNAME: root

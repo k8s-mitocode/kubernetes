@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fruit-curl-pod
+  namespace: name1
+  labels:
+    app: curl-api
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      resources:
+        limits:
+          cpu: 200m
+          memory: 500Mi
+        requests:
+          cpu: 100m
+          memory: 200Mi
+      command:
+        ["/bin/sh", "-c", "curl --location --request GET 'fruit:8090' curl --location --request POST 'fruit:8090/create?name=apple' curl --location --request POST 'fruit:8090/create?name=apricot' curl --location --request GET 'fruit:8090/list'"]
+  restartPolicy: Never
